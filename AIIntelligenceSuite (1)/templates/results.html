@@ -1,0 +1,295 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <div class="card bg-dark border-0 shadow">
+            <div class="card-body">
+                <h1 class="display-5 mb-3">
+                    <i class="fas fa-chart-bar text-primary me-2"></i> 
+                    Model Results
+                </h1>
+                <p class="lead">View the performance metrics and visualizations for your trained model.</p>
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-{{ 'brain' if model_type == 'deep_learning' else 'cogs' }} fa-2x text-primary me-3"></i>
+                            <div>
+                                <h5 class="mb-1">{{ 'Deep Learning' if model_type == 'deep_learning' else 'Traditional ML' }} Model</h5>
+                                <p class="mb-0 text-muted">{{ 'Neural Network with PyTorch' if model_type == 'deep_learning' else 'scikit-learn algorithm' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-md-end mb-3">
+                        <a href="{{ url_for('predict_page') }}" class="btn btn-primary">
+                            <i class="fas fa-chart-line me-2"></i> Make Predictions
+                        </a>
+                        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary ms-2">
+                            <i class="fas fa-arrow-left me-2"></i> Back to Training
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Training Info -->
+    {% if training_info %}
+    <div class="col-lg-4 mb-4">
+        <div class="card bg-dark border-0 shadow h-100">
+            <div class="card-header bg-dark">
+                <h4 class="mb-0">
+                    <i class="fas fa-info-circle me-2"></i> Training Information
+                </h4>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush bg-dark">
+                    {% if model_type == 'deep_learning' %}
+                    <li class="list-group-item bg-dark">
+                        <strong>Epochs Completed:</strong> {{ training_info.epochs_completed }}
+                    </li>
+                    <li class="list-group-item bg-dark">
+                        <strong>Final Training Loss:</strong> {{ '%.4f' % training_info.final_train_loss }}
+                    </li>
+                    {% if training_info.final_val_loss %}
+                    <li class="list-group-item bg-dark">
+                        <strong>Final Validation Loss:</strong> {{ '%.4f' % training_info.final_val_loss }}
+                    </li>
+                    {% endif %}
+                    {% if training_info.best_val_loss %}
+                    <li class="list-group-item bg-dark">
+                        <strong>Best Validation Loss:</strong> {{ '%.4f' % training_info.best_val_loss }}
+                    </li>
+                    {% endif %}
+                    <li class="list-group-item bg-dark">
+                        <strong>Early Stopped:</strong> {{ 'Yes' if training_info.early_stopped else 'No' }}
+                    </li>
+                    {% else %}
+                    <li class="list-group-item bg-dark">
+                        <strong>Model Type:</strong> {{ training_info.model_type.replace('_', ' ').title() }}
+                    </li>
+                    <li class="list-group-item bg-dark">
+                        <strong>Task:</strong> {{ training_info.task.title() }}
+                    </li>
+                    <li class="list-group-item bg-dark">
+                        <strong>Training Samples:</strong> {{ training_info.n_samples }}
+                    </li>
+                    <li class="list-group-item bg-dark">
+                        <strong>Features:</strong> {{ training_info.n_features }}
+                    </li>
+                    {% endif %}
+                </ul>
+                
+                {% if training_info.training_plot %}
+                <div class="mt-4">
+                    <h5>Training Progress</h5>
+                    <img src="{{ url_for('static', filename='training_plot.png') }}" alt="Training progress" class="img-fluid plot-img">
+                </div>
+                {% endif %}
+                
+                {% if training_info.importance_plot %}
+                <div class="mt-4">
+                    <h5>Feature Importance</h5>
+                    <img src="{{ url_for('static', filename='feature_importance.png') }}" alt="Feature importance" class="img-fluid plot-img">
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- Metrics -->
+    <div class="col-lg-{% if training_info %}8{% else %}12{% endif %} mb-4">
+        <div class="card bg-dark border-0 shadow">
+            <div class="card-header bg-dark">
+                <h4 class="mb-0">
+                    <i class="fas fa-chart-pie me-2"></i> Performance Metrics
+                </h4>
+            </div>
+            <div class="card-body">
+                {% if 'accuracy' in metrics %}
+                <!-- Classification Metrics -->
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100 bg-dark metric-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Accuracy</h5>
+                                <h3 class="mb-0">{{ '%.2f' % (metrics.accuracy * 100) }}%</h3>
+                            </div>
+                        </div>
+                    </div>
+                    {% if 'precision' in metrics %}
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100 bg-dark metric-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Precision</h5>
+                                <h3 class="mb-0">{{ '%.2f' % (metrics.precision * 100) }}%</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100 bg-dark metric-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Recall</h5>
+                                <h3 class="mb-0">{{ '%.2f' % (metrics.recall * 100) }}%</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100 bg-dark metric-card">
+                            <div class="card-body">
+                                <h5 class="card-title">F1 Score</h5>
+                                <h3 class="mb-0">{{ '%.2f' % (metrics.f1 * 100) }}%</h3>
+                            </div>
+                        </div>
+                    </div>
+                    {% elif 'precision_micro' in metrics %}
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100 bg-dark metric-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Precision (Micro)</h5>
+                                <h3 class="mb-0">{{ '%.2f' % (metrics.precision_micro * 100) }}%</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100 bg-dark metric-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Recall (Micro)</h5>
+                                <h3 class="mb-0">{{ '%.2f' % (metrics.recall_micro * 100) }}%</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100 bg-dark metric-card">
+                            <div class="card-body">
+                                <h5 class="card-title">F1 (Micro)</h5>
+                                <h3 class="mb-0">{{ '%.2f' % (metrics.f1_micro * 100) }}%</h3>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if 'roc_auc' in metrics %}
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100 bg-dark metric-card">
+                            <div class="card-body">
+                                <h5 class="card-title">ROC AUC</h5>
+                                <h3 class="mb-0">{{ '%.2f' % (metrics.roc_auc * 100) }}%</h3>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                {% if 'precision_macro' in metrics %}
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 bg-dark metric-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Precision (Macro)</h5>
+                                <h3 class="mb-0">{{ '%.2f' % (metrics.precision_macro * 100) }}%</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 bg-dark metric-card">
+                            <div class="card-body">
+                                <h5 class="card-title">Recall (Macro)</h5>
+                                <h3 class="mb-0">{{ '%.2f' % (metrics.recall_macro * 100) }}%</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 bg-dark metric-card">
+                            <div class="card-body">
+                                <h5 class="card-title">F1 (Macro)</h5>
+                                <h3 class="mb-0">{{ '%.2f' % (metrics.f1_macro * 100) }}%</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                
+                <!-- Confusion Matrix and ROC Curve -->
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-3">
+                        <h5>Confusion Matrix</h5>
+                        <img src="{{ url_for('static', filename='confusion_matrix.png') }}" alt="Confusion Matrix" class="img-fluid plot-img">
+                    </div>
+                    
+                    {% if 'roc_curve' in plots %}
+                    <div class="col-md-6 mb-3">
+                        <h5>ROC Curve</h5>
+                        <img src="{{ url_for('static', filename='roc_curve.png') }}" alt="ROC Curve" class="img-fluid plot-img">
+                    </div>
+                    {% endif %}
+                    
+                    {% if 'precision_recall_curve' in plots %}
+                    <div class="col-md-6 mb-3">
+                        <h5>Precision-Recall Curve</h5>
+                        <img src="{{ url_for('static', filename='precision_recall_curve.png') }}" alt="Precision-Recall Curve" class="img-fluid plot-img">
+                    </div>
+                    {% endif %}
+                </div>
+                
+                {% elif 'mse' in metrics %}
+                <!-- Regression Metrics -->
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100 bg-dark metric-card">
+                            <div class="card-body">
+                                <h5 class="card-title">MSE</h5>
+                                <h3 class="mb-0">{{ '%.4f' % metrics.mse }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100 bg-dark metric-card">
+                            <div class="card-body">
+                                <h5 class="card-title">RMSE</h5>
+                                <h3 class="mb-0">{{ '%.4f' % metrics.rmse }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100 bg-dark metric-card">
+                            <div class="card-body">
+                                <h5 class="card-title">MAE</h5>
+                                <h3 class="mb-0">{{ '%.4f' % metrics.mae }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="card h-100 bg-dark metric-card">
+                            <div class="card-body">
+                                <h5 class="card-title">R²</h5>
+                                <h3 class="mb-0">{{ '%.4f' % metrics.r2 }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Regression Plots -->
+                <div class="row mt-4">
+                    <div class="col-md-6 mb-3">
+                        <h5>Predicted vs Actual</h5>
+                        <img src="{{ url_for('static', filename='predicted_vs_actual.png') }}" alt="Predicted vs Actual" class="img-fluid plot-img">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <h5>Residuals</h5>
+                        <img src="{{ url_for('static', filename='residuals.png') }}" alt="Residuals" class="img-fluid plot-img">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <h5>Residuals Distribution</h5>
+                        <img src="{{ url_for('static', filename='residuals_distribution.png') }}" alt="Residuals Distribution" class="img-fluid plot-img">
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

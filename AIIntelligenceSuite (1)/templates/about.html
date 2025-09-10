@@ -1,0 +1,161 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <div class="card bg-dark border-0 shadow">
+            <div class="card-body">
+                <h1 class="display-5 mb-3">
+                    <i class="fas fa-info-circle text-primary me-2"></i> 
+                    About PyTorch ML Lab
+                </h1>
+                <p class="lead">An advanced machine learning platform built with PyTorch and scikit-learn.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8 mb-4">
+        <div class="card bg-dark border-0 shadow">
+            <div class="card-header bg-dark">
+                <h4 class="mb-0">
+                    <i class="fas fa-book me-2"></i> Project Overview
+                </h4>
+            </div>
+            <div class="card-body">
+                <p>PyTorch ML Lab is an advanced Python machine learning project that combines the power of PyTorch for deep learning with scikit-learn for traditional machine learning algorithms. This platform provides a comprehensive environment for model development and evaluation.</p>
+                
+                <h5 class="mt-4">Key Features</h5>
+                <ul>
+                    <li><strong>Deep Learning with PyTorch:</strong> Build neural networks for complex pattern recognition tasks.</li>
+                    <li><strong>Traditional ML with scikit-learn:</strong> Use established algorithms like Random Forest, SVM, and more.</li>
+                    <li><strong>Data Preprocessing:</strong> Automatic handling of missing values, feature encoding, and scaling.</li>
+                    <li><strong>Model Evaluation:</strong> Comprehensive metrics and visualizations to understand model performance.</li>
+                    <li><strong>Interactive Interface:</strong> User-friendly web interface for data upload, model training, and prediction.</li>
+                </ul>
+                
+                <h5 class="mt-4">Technical Details</h5>
+                <div class="table-responsive">
+                    <table class="table table-dark">
+                        <thead>
+                            <tr>
+                                <th>Component</th>
+                                <th>Technology</th>
+                                <th>Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Deep Learning</td>
+                                <td>PyTorch</td>
+                                <td>Neural network implementation and training</td>
+                            </tr>
+                            <tr>
+                                <td>Traditional ML</td>
+                                <td>scikit-learn</td>
+                                <td>Classical machine learning algorithms</td>
+                            </tr>
+                            <tr>
+                                <td>Data Processing</td>
+                                <td>pandas, NumPy</td>
+                                <td>Data manipulation and preprocessing</td>
+                            </tr>
+                            <tr>
+                                <td>Visualization</td>
+                                <td>Matplotlib, Seaborn</td>
+                                <td>Performance metric visualization</td>
+                            </tr>
+                            <tr>
+                                <td>Web Interface</td>
+                                <td>Flask, Bootstrap</td>
+                                <td>User interface and API endpoints</td>
+                            </tr>
+                            <tr>
+                                <td>Model Serialization</td>
+                                <td>joblib</td>
+                                <td>Model saving and loading</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4 mb-4">
+        <div class="card bg-dark border-0 shadow mb-4">
+            <div class="card-header bg-dark">
+                <h4 class="mb-0">
+                    <i class="fas fa-cogs me-2"></i> Workflow
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="list-group list-group-flush bg-dark">
+                    <div class="list-group-item bg-dark d-flex align-items-center">
+                        <span class="badge bg-primary rounded-circle me-3">1</span>
+                        <div>
+                            <h5 class="mb-1">Upload Dataset</h5>
+                            <p class="mb-0 text-muted">CSV format with structured data</p>
+                        </div>
+                    </div>
+                    <div class="list-group-item bg-dark d-flex align-items-center">
+                        <span class="badge bg-primary rounded-circle me-3">2</span>
+                        <div>
+                            <h5 class="mb-1">Configure Model</h5>
+                            <p class="mb-0 text-muted">Select features, target, and model type</p>
+                        </div>
+                    </div>
+                    <div class="list-group-item bg-dark d-flex align-items-center">
+                        <span class="badge bg-primary rounded-circle me-3">3</span>
+                        <div>
+                            <h5 class="mb-1">Train Model</h5>
+                            <p class="mb-0 text-muted">Automatic preprocessing and optimization</p>
+                        </div>
+                    </div>
+                    <div class="list-group-item bg-dark d-flex align-items-center">
+                        <span class="badge bg-primary rounded-circle me-3">4</span>
+                        <div>
+                            <h5 class="mb-1">Evaluate Results</h5>
+                            <p class="mb-0 text-muted">View metrics and visualizations</p>
+                        </div>
+                    </div>
+                    <div class="list-group-item bg-dark d-flex align-items-center">
+                        <span class="badge bg-primary rounded-circle me-3">5</span>
+                        <div>
+                            <h5 class="mb-1">Make Predictions</h5>
+                            <p class="mb-0 text-muted">Use the model on new data</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card bg-dark border-0 shadow">
+            <div class="card-header bg-dark">
+                <h4 class="mb-0">
+                    <i class="fas fa-lightbulb me-2"></i> Supported Models
+                </h4>
+            </div>
+            <div class="card-body">
+                <h5>Deep Learning</h5>
+                <ul>
+                    <li>Multi-layer Neural Networks</li>
+                    <li>Binary and Multi-class Classification</li>
+                    <li>Regression</li>
+                </ul>
+                
+                <h5>Traditional ML</h5>
+                <ul>
+                    <li>Random Forest</li>
+                    <li>Gradient Boosting</li>
+                    <li>Logistic Regression</li>
+                    <li>Linear Regression</li>
+                    <li>Support Vector Machines</li>
+                    <li>K-Nearest Neighbors</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

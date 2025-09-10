@@ -1,0 +1,146 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <div class="card bg-dark border-0 shadow">
+            <div class="card-body">
+                <h1 class="display-5 mb-3">
+                    <i class="fas fa-chart-line text-primary me-2"></i> 
+                    Make Predictions
+                </h1>
+                <p class="lead">Use your trained model to make predictions on new data.</p>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-magic fa-2x text-primary me-3"></i>
+                            <div>
+                                <h5 class="mb-1">Real-time Prediction</h5>
+                                <p class="mb-0 text-muted">Enter values to predict instantly</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-md-end mb-3">
+                        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i> Back to Training
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if not features %}
+<div class="row">
+    <div class="col mb-4">
+        <div class="card bg-dark border-0 shadow">
+            <div class="card-body text-center py-5">
+                <i class="fas fa-exclamation-triangle fa-4x text-warning mb-3"></i>
+                <h3>No Model Trained</h3>
+                <p class="lead">Please train a model first before making predictions.</p>
+                <a href="{{ url_for('index') }}" class="btn btn-primary mt-3">
+                    <i class="fas fa-brain me-2"></i> Train a Model
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+
+{% if prediction_made %}
+<div class="row mb-4">
+    <div class="col">
+        <div class="card bg-dark border-0 shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Prediction Result</h4>
+            </div>
+            <div class="card-body text-center">
+                <div class="prediction-result">
+                    <i class="fas fa-check-circle text-success me-2"></i>
+                    {% if prediction is number and prediction|round != prediction %}
+                    {{ '%.4f'|format(prediction) }}
+                    {% else %}
+                    {{ prediction }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="row">
+    <div class="col-lg-6 mx-auto mb-4">
+        <div class="card bg-dark border-0 shadow">
+            <div class="card-header bg-dark">
+                <h4 class="mb-0">
+                    <i class="fas fa-edit me-2"></i> Enter Feature Values
+                </h4>
+            </div>
+            <div class="card-body">
+                <form id="predict-form" action="{{ url_for('make_prediction') }}" method="post">
+                    <div class="row">
+                        {% for feature in features %}
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ feature }}" class="form-label">{{ feature }}</label>
+                            <input type="number" step="any" class="form-control" id="{{ feature }}" name="{{ feature }}" placeholder="Enter value" required>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-magic me-2"></i> Make Prediction
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-6 mb-4">
+        <div class="card bg-dark border-0 shadow h-100">
+            <div class="card-header bg-dark">
+                <h4 class="mb-0">
+                    <i class="fas fa-info-circle me-2"></i> Feature Information
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-primary">
+                    <i class="fas fa-lightbulb me-2"></i> 
+                    <strong>Tips for best results:</strong>
+                    <ul class="mb-0 mt-2">
+                        <li>Enter values in the same range as your training data</li>
+                        <li>Numeric values only are supported</li>
+                        <li>For categorical features, use the same encoding as in your training data</li>
+                    </ul>
+                </div>
+                
+                <div class="table-responsive mt-3">
+                    <table class="table table-dark table-hover">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for feature in features %}
+                            <tr>
+                                <td>{{ feature }}</td>
+                                <td><span class="badge bg-info">Numeric</span></td>
+                                <td>Feature used in model training</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

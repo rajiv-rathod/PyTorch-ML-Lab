@@ -1,0 +1,6 @@
+site_name: PyTorch-ML-Lab
+theme:
+  name: material
+nav:
+  - Home: index.md
+

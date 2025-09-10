@@ -1,0 +1,1 @@
+{"features": ["Doctor Name", "City", "Specialization", "Doctor Qualification", "Experience(Years)", "Total_Reviews", "Patient Satisfaction Rate(%age)", "Avg Time to Patients(mins)", "Wait Time(mins)", "Hospital Address", "Doctors Link", "Fee(PKR)"], "target": "Total_Reviews", "is_classification": false}
