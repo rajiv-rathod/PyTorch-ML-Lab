@@ -1,6 +1,44 @@
-site_name: PyTorch-ML-Lab
+site_name: PyTorch ML Lab
 theme:
   name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - search.highlight
+  palette:
+    primary: deep purple
+    accent: purple
+
 nav:
   - Home: index.md
+  - Getting Started:
+    - Installation: installation.md
+  - User Guide:
+    - Data Preparation: user-guide/data-preparation.md
+    - Model Training: user-guide/model-training.md
+    - Evaluation: user-guide/evaluation.md
+    - Deployment: user-guide/deployment.md
+  - API Reference:
+    - REST API: api/rest-api.md
+    - Python API: api/python-api.md
+  - Development:
+    - Contributing: development/contributing.md
+    - Architecture: development/architecture.md
+  - Support:
+    - FAQ: support/faq.md
+    - Troubleshooting: support/troubleshooting.md
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - toc:
+      permalink: true
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
 
