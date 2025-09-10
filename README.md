@@ -1,4 +1,27 @@
-# PyTorch ML Lab
+# PYTORCH-ML-LAB
+
+*Empowering Innovation Through Seamless Machine Learning Mastery*
+
+![last commit](https://img.shields.io/github/last-commit/shretadas/PyTorch-ML-Lab?color=blue&style=flat-square)
+![html](https://img.shields.io/badge/html-47.5%25-blue?style=flat-square)
+![languages](https://img.shields.io/badge/languages-6-blue?style=flat-square)
+
+## Built with the tools and technologies:
+
+![Flask](https://img.shields.io/badge/-Flask-000000?style=for-the-badge&logo=flask)
+![JSON](https://img.shields.io/badge/-JSON-000000?style=for-the-badge&logo=json)
+![Markdown](https://img.shields.io/badge/-Markdown-000000?style=for-the-badge&logo=markdown)
+![TOML](https://img.shields.io/badge/-TOML-000000?style=for-the-badge&logo=toml)
+![scikit-learn](https://img.shields.io/badge/-scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn)
+![Babel](https://img.shields.io/badge/-Babel-F9DC3E?style=for-the-badge&logo=babel)
+![SymPy](https://img.shields.io/badge/-SymPy-3B5526?style=for-the-badge&logo=sympy)
+![Gunicorn](https://img.shields.io/badge/-Gunicorn-499848?style=for-the-badge&logo=gunicorn)
+![NumPy](https://img.shields.io/badge/-NumPy-013243?style=for-the-badge&logo=numpy)
+![Python](https://img.shields.io/badge/-Python-3776AB?style=for-the-badge&logo=python)
+![SciPy](https://img.shields.io/badge/-SciPy-8CAAE6?style=for-the-badge&logo=scipy)
+![Plotly](https://img.shields.io/badge/-Plotly-3F4F75?style=for-the-badge&logo=plotly)
+![pandas](https://img.shields.io/badge/-pandas-150458?style=for-the-badge&logo=pandas)
+![UV](https://img.shields.io/badge/-UV-FF69B4?style=for-the-badge)
 
 A comprehensive Machine Learning platform built with Flask, PyTorch, and scikit-learn, providing an interactive interface for model training, evaluation, and predictions.
 
